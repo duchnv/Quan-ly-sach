@@ -1,10 +1,10 @@
-package com.ltw.Btl1Spring;
+package com.ltw.QLSach;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Btl1SpringApplicationTests {
+class QLSachApplicationTests {
 
 	@Test
 	void contextLoads() {
