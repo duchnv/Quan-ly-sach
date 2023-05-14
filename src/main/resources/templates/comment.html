@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>Thêm mới sách</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+        
+        
+        <style type="text/css">
+            .back-img {
+                background: url("book.png");
+                height: 40vh;
+                width: 100%;
+                
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .crd-ho:hover{
+                background: #fff3e0;
+            }
+            
+        </style>
+        <div class="container-fluid" style="height: 10px; background-color: #f57f17"></div>
+        <div class="container-fluid p-3 bg-light" style="background-color: #fff3e0" >
+                <div class="row">
+                    <div class="col-md-9 text-success">
+                        <h1 style="font-family: 'Lobster', cursive;"><i class="fa-solid fa-book" ></i> Thư viện sách</h1>
+                    </div>
+                    <div class="col-md-2 text-success">
+                        <h4 th:if = "${session.username} != null" th:text="'Xin chào: ' + ${session.username}" ></h4>
+                    </div>
+                    <div class="col-md-0">
+                        <a th:if = "${session.username} != null" class="btn btn-outline-secondary" th:href="@{/log-out}" ><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất </a>
+                    </div>
+                </div>
+        </div>
+    </head>
+    
+
+    <body style="background-color: #f7f7f7;">
+    
+    <!------------------ Header ------------------>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+            
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/books}"><i class="fa-sharp fa-solid fa-house"></i> Home <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <a th:href="@{/buy-book/view}" class="btn btn-light my-2 my-sm-0 ml-1">Giỏ hàng <i class="fa-solid fa-cart-shopping"></i></a>
+                    </form>
+                </div>
+        </nav>
+        
+    <!----------  Start  ------------------>
+        <main class="container" style=" margin-bottom: 30px;">
+            <header class="row text-center"></header>
+            <section  class="row">
+                <div class="col mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Thông tin </h2>
+                        </div>
+                        <div class="container">
+							<div class="row ">
+								<div class="col-md-5 p-4 border bg-white">
+									<form th:object="${book}" th:action="@{/books/save/{id}(id=${book.id})}" th:method="${id} < 0 ? POST:PUT" enctype="multipart/form-data">
+										<div >
+											<div class="text-center p-3">
+												<img th:src="'/uploads'+ '/' +${book.trangbia}" id="preview" width="250" height="300">
+											</div></br>
+											<div class="row" >
+												<div class="col-4 text-center">
+													<div class="form-group">
+														<label>Tên sách: </label>
+													</div>
+												</div>
+												<div class="col-8">
+													<div class="form-group">
+														<input type="text" th:field="*{tensach}" class="form-control text-center" disabled>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-4 text-center">
+													<div class="form-group">
+														<label >Tác Giả: </label>
+													</div>
+												</div>
+												<div class="col-8">
+													<div class="form-group">
+														<input type="text" th:field="*{tacgia}" class="form-control text-center" disabled>
+													</div>
+												</div>
+											</div>
+												 
+											<div class="row">
+												<div class="col-4 text-center">
+													<div class="form-group">
+														<label >Giá sách: </label>
+													</div>
+												</div>
+												<div class="col-8">
+													<div class="form-group">
+														<input type="text" th:field="*{giasach}" class="form-control text-center" disabled>
+														
+													</div>
+												</div>
+											</div>
+										  </div>
+									</form>	
+						        </div>
+								
+								<div class="col-md-7 p-4 border bg-white">
+									<form th:object="${book}" th:action="@{/books/save/{id}(id=${book.id})}" th:method="PUT" enctype="multipart/form-data">
+										<!-- <div class="row" th:if = "${session.username} != admin and ${session.username} != null">
+											<div class="col-5">
+												<h5 >Số lượng sách mua: </h5>
+											</div>
+											<div class="col-5">
+												<div >
+													<form th:object=${items} th:action="@{/update}" th:method="POST" enctype="multipart/form-data">
+														<input type = number th:field="*{qty}" name="qty" th:value="${qty}" style="width: 50px;">
+														
+													</form>
+												</div>
+											</div>
+										</div></br> -->
+										<div class="row text-center">  
+											<div class="col-3">
+												<h5 >Đánh giá: </h5>
+											</div>  
+											<div class="col-5">
+												<form action="">
+													<input class="star star-5" id="star-5" type="radio" name="star"/>
+													<label class="star star-5" for="star-5"></label>
+													<input class="star star-4" id="star-4" type="radio" name="star"/>
+													<label class="star star-4" for="star-4"></label>
+													<input class="star star-3" id="star-3" type="radio" name="star"/>
+													<label class="star star-3" for="star-3"></label>
+													<input class="star star-2" id="star-2" type="radio" name="star"/>
+													<label class="star star-2" for="star-2"></label>
+													<input class="star star-1" id="star-1" type="radio" name="star"/>
+													<label class="star star-1" for="star-1"></label>
+												</form>
+											</div>
+										</div>
+										<div class="row" >
+											<div class="col-10">
+												<div class="form-col">
+													<div><textarea  th:field="*{danhgia}" rows="5" class="form-control" placeholder="Enter here"></textarea></div>
+													<small class="text-danger" th:if="${#fields.hasErrors('danhgia')}" th:errors="*{danhgia}"></small>
+												</div>
+											</div>
+										</div></br>
+										<div class = " text-center text-white">
+												<a type="submit" class = "btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Lưu </a>
+												
+										</div>
+									</form>
+								</div>
+								
+							</div>
+						</div>
+						
+			          <div th:if="${id} > 0" class = "card-footer text-center text-white">
+			          		<a th:href="@{/books}" class="btn btn-danger text-white"><i class="fa-solid fa-backward"></i> Quay lại </a>
+			            	<tr th:each="b : ${book}" >
+									<a th:href="@{/buy-book/add/{id}(id = ${b.id})}" class="btn btn-success text-white"><i class="fa-solid fa-cart-shopping"></i> Mua</a>
+							</tr>
+			          </div>
+                    </div>
+                  
+                </div>
+            </section>
+            
+            
+            <footer class="row"></footer>
+            
+        </main>
+        
+        <script>
+            $(document).on("click", ".browse", function() {
+              console.log('Go here');
+              var file = $(this).parents().find(".file");
+              file.trigger("click");
+            });
+            $('input[type="file"]').change(function(e) {
+              var fileName = e.target.files[0].name;
+              $("#file").val(fileName);
+          
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                document.getElementById("preview").src = e.target.result;
+              };
+              reader.readAsDataURL(this.files[0]);
+            });
+            
+        </script>
+
+
+
+        <!----------  End ------------------>
+        <div class="container-fluid text-center text-white p-2" style="margin-top: 110px; background-color: #f57f17;">
+            <hr />
+            <p class="copyright">Copyright 2022 - B</p>
+        </div>
+
+
+        
+
+    </body>
+</html>

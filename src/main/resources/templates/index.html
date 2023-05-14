@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>Thư viện sách</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/css/style.css">
+        <style type="text/css">
+            .back-img {
+                background: url("/uploads/book.png");
+                height: 53vh;
+                width: 100%;
+                
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            .crd-ho:hover{
+                background: #fff3e0;
+            }
+        </style>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+        
+    </head>
+    
+
+    <body style="background-color: #f7f7f7;">
+        <!------------------ Header ------------------>
+        <div class="container-fluid" style="height: 10px; background-color: #f57f17"></div>
+        <div class="container-fluid p-3 bg-light" style="background-color: #fff3e0" >
+                <div class="row">
+                    <div class="col-md-10 text-success">
+                        <h1 style="font-family: 'Lobster', cursive;"><i class="fa-solid fa-book" ></i> Thư viện sách</h1>
+                    </div>
+                    <div class="col-md-0">
+                        <a th:if = "${session.username} != null" class="btn btn-outline-secondary" th:href="@{/log-out}" ><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất </a>
+                        <h4 th:if = "${session.username} != null" th:text="'Xin chào: ' + ${session.username}" class="text-success" ></h4>
+                        <a th:if = "${session.username} == null" th:href="@{/login}" class="btn btn-outline-success btn-md mb-3 "><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập </a>
+                        <a th:if = "${session.username} == null" th:href="@{/sign-up}" class="btn btn-outline-warning btn-md mb-3"><i class="fa-solid fa-user-plus"></i> Đăng ký </a>
+                    </div>
+                </div>
+        </div>
+        
+        <!----------  Nav Bar ------------------>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+            
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                	<span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/books}"><i class="fa-sharp fa-solid fa-house"></i> Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if = "${session.username} == admin" th:href="@{/books/new/{id}(id=-1)}"><i class="fa-solid fa-book"></i> Thêm sách mới</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <a th:if = "${session.username} != admin and ${session.username} != null" th:href="@{/buy-book/view}" class="btn btn-light my-2 my-sm-0 ml-1">Giỏ hành <i class="fa-solid fa-cart-shopping"></i></a>
+                        <a th:if = "${session.username} == null" th:href="@{/login}" class="btn btn-light my-2 my-sm-0 ml-1">Giỏ hành <i class="fa-solid fa-cart-shopping"></i></a>
+                    </form>
+                </div>
+        </nav>
+        <div class="container-fluid back-img ">
+        	
+            <h1 class="text-center text-black p-5 col-md-7" style="font-family: 'Caveat', cursive;" >"Sách là nguồn của cải quý báu của thế giới và là di sản xứng đáng của các thế hệ và các quốc gia"</h1>
+            <h2 class="text-center text-black col-md-7" style="font-family: 'Caveat', cursive;" >- Henry David Thoreau</h2>
+        </div>
+        <!----------  Start  ------------------>
+        <main th:if = "${session.username} == admin" class="container-fluid">
+            <section class="row">
+                <div class="col mt-4">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: #fff3e0">
+                            <h2>Tất cả sách</h2>
+                        </div>
+                        <div class="card-body text-center">
+                            <table class="table table-striped table-inverse">
+                                <thead class="thead-inverse" style="background-color: #fff3e0">
+                                    <tr>
+                                        <th>Tên sách</th>
+                                        <th>Tác giả</th>
+                                        <th th:if = "${session.username} == admin or ${session.username} == null">Thể loại</th>
+                                        <th th:if = "${session.username} == admin or ${session.username} == null">Ngày phát hành</th>
+                                        <th th:if = "${session.username} == admin or ${session.username} == null">Số trang</th>
+                                        <th>Trang bìa</th>
+                                        <th th:if = "${session.username} == admin or ${session.username} == null">Giá sách</th>
+                                        <th th:if = "${session.username} !=null and ${session.username} != admin" >Đánh giá</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="b : ${listBooks}">
+                                            <td th:text="${b.tensach}"></td>
+                                            <td th:text="${b.tacgia}"></td>
+                                            <td th:if = "${session.username} == admin or ${session.username} == null" th:text="${b.theloai}"></td>
+                                            <td th:if = "${session.username} == admin or ${session.username} == null" th:text="${b.ngayphathanh}"></td>
+                                            <td th:if = "${session.username} == admin or ${session.username} == null" th:text="${b.sotrang}"></td>
+                                            <td><img th:src="${'/uploads'+ '/' + b.trangbia}" alt="Không có trang bìa" width="50" height="50"></td>
+                                            <td th:if = "${session.username} == admin or ${session.username} == null" th:text="${b.giasach}"></td>
+                                            <td th:if = "${session.username} !=null and ${session.username} != admin"></td>
+                                            
+                                            <td>
+                                                <a th:if = "${session.username} == admin" th:href="@{/books/new/{id}(id=${b.id})}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a> 
+                                                <a th:if = "${session.username} == admin" th:href="@{/books/delete/{id}(id=${b.id})}" onclick=" return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                                
+                                                <a th:if = "${session.username} != admin and ${session.username} !=null " th:href="@{/books/new/{id}(id=${b.id})}" class="btn btn-warning"><i class="fa-solid fa-eye"></i> Xem</a>
+                                                <a th:if = "${session.username} != admin and ${session.username} !=null " th:href="@{/buy-book/add/{id}(id = ${b.id})}" class="btn btn-danger"><i class="fa-solid fa-cart-shopping"></i> Mua</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                            </table>      
+                        </div>
+                    </div>
+                </div>
+            </section>
+              <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <footer class="row"></footer>
+        </main>
+
+
+        <main th:if = "${session.username} != admin and ${session.username} !=null" class="container-fluid">
+            <section class="row">
+                <div class="col mt-4">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: #fff3e0">
+                            <h3 class="text-center">Tất cả các sách</h3>
+                        </div>
+                        <div  class="row p-3 " >
+                        	<tr th:each="b : ${listBooks}" >
+                        		<div class="col-md-3" >
+	                                <div class="card crd-ho" >
+	                                    <div  class="card-body text-center" >
+		                                     <img th:src="${'/uploads'+ '/' + b.trangbia}" alt="Không có trang bìa" style="width: 250px; height: 300px"></br>
+		                                     Tên sách: <i th:text="${b.tensach}"></i></br>
+		                                     Tác giả: <i th:text="${b.tacgia}"></i></br>
+		                                     Giá: <i th:text="${b.giasach}"> </i> VND</p>
+		                                     <div class=" text-center ">
+		                                     	<a th:href="@{/books/new/{id}(id=${b.id})}" class="btn btn-warning btn-sm text-white"><i class="fa-solid fa-eye"></i> Xem</a>
+		                                     	<a th:href="@{/buy-book/add/{id}(id = ${b.id})}" class="btn btn-success btn-sm text-white"><i class="fa-solid fa-cart-shopping"></i> Mua</a>
+		                                     	<a th:href="@{/books/comment/{id}(id=${b.id})}" class="btn btn-danger btn-sm text-white"><i class="fa-solid fa-star-half-stroke"></i> Đánh giá</a>
+		                                     </div>
+	                                    </div>
+	                                </div></br>
+	                            </div>
+                        	</tr>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <footer class="row"></footer>
+        </main>
+    	
+    	
+    	<main th:if = "${session.username} == null" class="container-fluid">
+            <section class="row">
+                <div class="col mt-4">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: #fff3e0">
+                            <h3 class="text-center">Tất cả các sách</h3>
+                        </div>
+                        <div  class="row p-3 " >
+                        	<tr th:each="b : ${listBooks}" >
+                        		<div class="col-md-3" >
+	                                <div class="card crd-ho" >
+	                                    <div  class="card-body text-center" >
+		                                     <img th:src="${'/uploads'+ '/' + b.trangbia}" alt="Không có trang bìa" style="width: 250px; height: 300px"></br>
+		                                     Tên sách: <i th:text="${b.tensach}"></i></br>
+		                                     Tác giả: <i th:text="${b.tacgia}"></i></br>
+		                                     Giá: <i th:text="${b.giasach}"> </i> VND</p>
+		                                     <div class=" text-center ">
+		                                     	<a th:href="@{/books/new/{id}(id=${b.id})}" class="btn btn-warning btn-sm text-white"><i class="fa-solid fa-eye"></i> Xem</a>
+		                                     	<a th:href="@{/login}" class="btn btn-danger btn-sm text-white"><i class="fa-solid fa-star-half-stroke"></i> Đánh giá</a>
+		                                     </div>
+	                                    </div>
+	                                </div></br>
+	                            </div>
+                        	</tr>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <footer class="row"></footer>
+        </main>
+    	
+        <!----------  End ------------------>
+        <div class="container-fluid text-center text-white p-2" style="margin-top: 100px; background-color: #f57f17;">
+            <hr />
+            <p class="copyright">Copyright 2022 - B</p>
+        </div>
+
+
+        
+
+    </body>
+</html>
